@@ -1,13 +1,9 @@
 How to work
 
-install the deps
+1.npm  install 
 
-npm install
-run the dev server
+2.npm run dev 
 
-npm run dev
+run the dev server then open http://localhost:8080 to see how it works
 
-then open http://localhost:8080 to see how it works
-
-
-npm run build
+3.npm run build
