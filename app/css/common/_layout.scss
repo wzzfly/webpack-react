@@ -1,0 +1,14 @@
+@charset "UTF-8";
+@import "settings";
+@import "mixins";
+.l-row {
+    @extend %l-row;
+}
+
+.l-mini .grid-extra-item {
+    display: none;
+}
+
+.movie-slider-module {
+    @extend %l-row;
+}

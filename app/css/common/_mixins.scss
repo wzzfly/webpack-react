@@ -1,0 +1,522 @@
+@charset "utf-8";
+@import "settings";
+// 字体族
+@mixin f-constantia {
+    @font-face {
+        font-family: 'Constantia';
+        src: url("#{$font}/Constantia/Constantia.eot");
+        src: url("#{$font}/Constantia/Constantia.woff") format("woff"),
+        url("#{$font}/Constantia/Constantia.ttf") format("truetype"),
+        url("#{$font}/Constantia/Constantia.svg") format("svg");
+        font-weight: normal;
+        font-style: normal;
+    }
+}
+
+// 橙色强调
+%orange {
+    font-style: normal;
+    color: #f60;
+}
+
+// 红色
+%red {
+    font-style: normal;
+    color: #de0000;
+}
+
+// 标题，子标题
+%title-desc {
+    h2,
+    h2 > a,
+    .txt {
+        @extend %ellipsis;
+    }
+    h2 > a {
+        display: block;
+        font-size: 16px;
+        line-height: 26px;
+        color: #333;
+        padding-top: 6px;
+        @extend %ellipsis;
+        &:hover {
+            color: #b68b42;
+        }
+    }
+    .txt {
+        font-size: 12px;
+        line-height: 20px;
+        color: #555;
+        @extend %ellipsis;
+    }
+}
+
+// 标题模块
+%main-title {
+    .main-title {
+        position: relative;
+        > .tit {
+            display: inline-block;
+            font-size: 24px;
+            color: #333;
+            line-height: 64px;
+            padding-top: 12px;
+            .desc {
+                position: relative;
+                padding: 0 6px;
+                font-size: 14px;
+                margin-left: 20px;
+                line-height: 20px;
+                &:before,
+                &:after {
+                    content: '';
+                    position: absolute;
+                    width: 4px;
+                    height: 4px;
+                    border-style: solid;
+                    border-color: #ab8f60;
+                    overflow: hidden;
+                }
+                &:before {
+                    top: 0;
+                    left: 0;
+                    border-width: 1px 0 0 1px;
+                }
+                &:after {
+                    bottom: 0;
+                    right: 0;
+                    border-width: 0 1px 1px 0;
+                    // border-color:#ab8f60;
+                }
+            }
+        }
+        > .more,
+        > .switch-btn {
+            position: absolute;
+            right: 0;
+            height: 34px;
+            line-height: 34px;
+            color: #999;
+            font-size: 14px;
+            z-index: 1;
+            bottom: 10px;
+        }
+    }
+}
+
+%movie-slider-module {
+    @extend %main-title;
+}
+
+%l-row {
+    position: relative;
+    width: $maxWidth;
+    margin-left: auto;
+    margin-right: auto;
+    .l-mini & {
+        width: $minWidth;
+    }
+}
+@mixin px2px($name: font-size, $px: 24) {
+    #{$name}: round($px / 2) * 1px;
+
+    [data-dpr="2"] & {
+        #{$name}: $px * 1px;
+    }
+
+    [data-dpr="2.5"] & {
+        #{$name}: round($px * 2.5 / 2) * 1px;
+    }
+
+    [data-dpr="2.75"] & {
+        #{$name}: round($px * 2.75 / 2) * 1px;
+    }
+
+    [data-dpr="3"] & {
+        #{$name}: round($px / 2 * 3) * 1px;
+    }
+
+    [data-dpr="4"] & {
+        #{$name}: $px * 2px;
+    }
+}
+// 一个四边都带的阴影效果
+// 可以是外阴影，也可以是内阴影
+@mixin shadow-around($shadow-offset,
+$shadow-blur,
+$shadow-color,
+$direct: "") {
+    box-shadow: 0 -#{$shadow-offset} $shadow-blur $shadow-color #{$direct},
+    $shadow-offset 0 $shadow-blur $shadow-color #{$direct},
+    0 $shadow-offset $shadow-blur $shadow-color #{$direct},
+    -#{$shadow-offset} 0 $shadow-blur $shadow-color #{$direct};
+}
+
+@mixin l-row($isRelative: false,
+$isCenter: false) {
+    width: $maxWidth;
+    margin-left: auto;
+    margin-right: auto;
+    .l-mini & {
+        width: $minWidth;
+    }
+    @if $isRelative !=true {
+        // position: static;
+    }
+    @else {
+        position: relative;
+    }
+    @if $isCenter !=true {
+        // margin-left: auto;
+        // margin-right: auto;
+    }
+    @else {
+        position: absolute;
+        left: 50%;
+        margin-left: -$maxWidth / 2;
+        .l-mini & {
+            margin-left: -$minWidth / 2;
+        }
+    }
+}
+
+@mixin grid-col($cols) {
+    float: left;
+    width: ($gridWidth + $gridGutter) * $cols - $gridGutter;
+    margin-right: $gridGutter;
+}
+
+// 错误成功 icon图标
+// 分为24*24，16*16两种规格，默认使用16*16
+%result-icon {
+    &:before {
+        display: inline-block;
+        content: '';
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        background-image: url(#{$appBg}/result-icon.png);
+        background-repeat: no-repeat;
+        vertical-align: middle;
+    }
+}
+
+// 懒加载背景图
+%lazy-bg {
+    display: block;
+    background: #efefef url(#{$appBg}/loading.png) center center no-repeat;
+}
+
+%lazy-bg-big {
+    display: block;
+    background: url(#{$appBg}/loading-big.png) center center no-repeat;
+}
+
+// 载入中菊花图
+// 懒加载背景图
+%loading-bg {
+    display: block;
+    background: #efefef url(#{$appBg}/loading.gif) center center no-repeat;
+}
+
+// clearfix
+%clearfix {
+    &:before,
+    &:after {
+        content: '';
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// 文本溢出
+%ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// 文本折行切断
+%word-break {
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+%text-hide {
+    display: block;
+    text-indent: -9999em;
+    overflow: hidden;
+}
+
+// css小三角
+%triangle-basic {
+    content: "";
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+// 文本折行溢出，显示省略号
+// 只是适合webkit浏览器
+@mixin line-clamp($clamps: 2) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $clamps;
+    -webkit-box-orient: vertical;
+}
+
+@mixin triangle($direction,
+$size,
+$borderColor) {
+    @extend %triangle-basic;
+    @if $direction==top {
+        border-bottom: $size solid $borderColor;
+        border-left: $size dashed transparent;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction==right {
+        border-left: $size solid $borderColor;
+        border-top: $size dashed transparent;
+        border-bottom: $size dashed transparent;
+    }
+    @else if $direction==bottom {
+        border-top: $size solid $borderColor;
+        border-left: $size dashed transparent;
+        border-right: $size dashed transparent;
+    }
+    @else if $direction==left {
+        border-right: $size solid $borderColor;
+        border-top: $size dashed transparent;
+        border-bottom: $size dashed transparent;
+    }
+}
+
+// 背景图路径简写
+@mixin bg($bgname,
+$type: "app",
+$left: center,
+$top: center) {
+    @if $type=="app" {
+        background-image: url(#{$appBg}/#{$bgname});
+    }
+    @else if $type=="utils" {
+        background-image: url(#{$utilsBg}/#{$bgname});
+    }
+    @else {
+        background-image: url(#{$appBg}/#{$bgname});
+    }
+    background-position: $left $top;
+    background-repeat: no-repeat;
+}
+
+// 垂直渐变背景
+@mixin gradient-vertical($direction,
+$start,
+$end,
+$times: 1) {
+    // background: $start;
+    @if $direction==top {
+        $direction: to bottom;
+    }
+    @else if $direction==bottom {
+        $direction: to top;
+    }
+    @if $times==1 {
+        background-image: none;
+    }
+    @else {
+        $all: linear-gradient($direction, $start, $end);
+        @for $i from 2 to $times {
+            $all: append($all, linear-gradient($direction, $start, $end), comma);
+        }
+        background-image: $all;
+    }
+}
+
+// 橙色按钮
+%orange-btn {
+    display: block;
+    font-size: 14px;
+    color: #292929;
+    text-align: center;
+    background-color: #e3b561;
+    @include gradient-vertical(top,
+    #e8c98a,
+    #e3b662,
+    2);
+    &:hover {
+        background-color: #e0b86c;
+        @include gradient-vertical(top,
+        #d8a953,
+        #e8c783,
+        2);
+    }
+}
+
+@mixin orange-btn($btn-width,
+$btn-height) {
+    width: $btn-width;
+    height: $btn-height;
+    line-height: $btn-height;
+    border-radius: $btn-height / 2;
+    @extend %orange-btn;
+}
+
+// 土豪金按钮  增加bgColor参数
+%gold-btn {
+    display: block;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+@mixin gold-btn($btn-width,
+$btn-height,
+$btn-bgcolor) {
+    width: $btn-width;
+    height: $btn-height;
+    line-height: $btn-height;
+    border-radius: $btn-height / 2;
+    background-color: $btn-bgcolor;
+    @extend %gold-btn;
+}
+
+// 轮播大图模块样式扩展
+%full-slide {
+    position: relative;
+    height: 470px;
+    background-color: #535353;
+    &:before {
+        @extend %lazy-bg-big;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 200px;
+        height: 154px;
+        content: '';
+        margin: -77px 0 0 -100px;
+    }
+    .switch-play-btn {
+        @include l-row(false,
+        true);
+    }
+}
+
+// 会员免费图标
+%free-icon {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 66px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    border-radius: 0 0 2px 2px;
+    background-color: #caa361;
+    background-color: rgba(202, 163, 97, 0.9);
+    // background-color: #d23a2f;
+    // background-color: rgba(210, 58, 47, 0.9);
+}
+
+// 单个电影海报样式
+// 包含电影海报，标题，子标题，评分
+%movie-module {
+    $item-width: 200px;
+    $item-height: 300px;
+    $info-height: 74px;
+    $item-gutter: 20px;
+    $play-btn-w: 30px;
+    $play-btn-h: 60px;
+    @extend %clearfix;
+    padding: 20px 0 36px 0;
+    margin-right: -#{$item-gutter};
+    .slider-item {
+        position: relative;
+        float: left;
+        width: $item-width;
+        margin-right: $item-gutter;
+        .slider-info-box > .img-box {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            @extend %lazy-bg;
+            .play-btn {
+                display: none;
+                position: absolute;
+                top: 0;
+                width: $item-width;
+                height: $item-height;
+                @include bg("play-btn.png");
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.3);
+                @extend %text-hide;
+                z-index: 1;
+            }
+            .free-icon {
+                @extend %free-icon;
+            }
+            &:hover {
+                .play-btn {
+                    display: block;
+                }
+                .free-icon {
+                    display: none;
+                }
+            }
+        }
+        .info {
+            height: $info-height;
+            overflow: hidden;
+            h2,
+            h2 > a {
+                font-size: 16px;
+                line-height: 26px;
+                color: #333;
+                padding-top: 6px;
+                @extend %ellipsis;
+                &:hover {
+                    color: #b68b42;
+                }
+            }
+            .txt {
+                font-size: 12px;
+                line-height: 20px;
+                color: #555;
+                @extend %ellipsis;
+            }
+            h2,
+            .txt {
+                width: 136px;
+                @extend %ellipsis;
+            }
+            .scores {
+                position: absolute;
+                bottom: 22px;
+                right: 2px;
+                color: #ac8655;
+                font-family: 'Constantia';
+                font-size: 33px;
+            }
+        }
+    }
+}
+
+// 错误成功 icon图标
+// 分为24*24，16*16两种规格，默认使用16*16
+%result-icon {
+    &:before {
+        display: inline-block;
+        content: '';
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        @include bg("result-icon.png");
+        background-repeat: no-repeat;
+        vertical-align: middle;
+    }
+}
