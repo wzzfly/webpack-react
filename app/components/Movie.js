@@ -3,12 +3,11 @@ import React from 'react';
 class Movie extends React.Component{
   constructor(props) {
     super(props);
-
   }
   render() {
     const numbers = this.props.value;
     const listItems = numbers.map((item, index) =>
-        <li  key={index}>
+        <li key={index}>
            <a href="#"> <img src= {item.movieImg} /></a>
            <h3 className="sub-tit">{item.text}</h3>
            <p className="playTotal">热播次数：{item.playTotal}</p>

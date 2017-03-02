@@ -16,7 +16,6 @@ class BuyVip extends React.Component{
     }));
   }
   render() {
-    var display;
     return (
      <div className="tenYears-buyVip">
         <div className="content">

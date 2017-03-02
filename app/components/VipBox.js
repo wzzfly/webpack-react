@@ -4,7 +4,6 @@ import Header from './Header.js';
 import BuyVip from './BuyVip.js';
 import Movie from './Movie.js';
 
-
 class VipBox extends React.Component{
 	constructor(props) {
 	    super(props);
@@ -26,24 +25,25 @@ class VipBox extends React.Component{
 		  1000
 		);
 	}
-
 	componentWillUnmount() {
 		clearInterval(this.timer);
 	}
-
 	timeTick() {
 		this.setState({
 		  date: new Date()
 		});
 	}
 	render() {
+		//内联样式 
+		var myStyle = {
+	        color:'#f00',
+	        fontSize:100
+        };
 		return (
 		    <div className="tenYear">
-		        <h1>Hello, {this.state.title}!</h1>
+		        <h1 style= {myStyle}>Hello, {this.state.title}!</h1>
 		        <h2>现在时间：{this.state.date.toLocaleTimeString()}</h2>
-		        <Header />
-		        <BuyVip />
-		        <Movie value = {this.state.numbers}/>
+
 		    </div>
 		);
 	}
