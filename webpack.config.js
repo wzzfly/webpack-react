@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
@@ -21,7 +22,8 @@ module.exports= {
     historyApiFallback: true,
     hot: true,
     inline: true,
-    progress: true
+    progress: true,
+    port:3000
   },
   //babel重要的loader在这里
   module: {
@@ -48,7 +50,8 @@ module.exports= {
   },
   plugins: [
     new HtmlwebpackPlugin({
-      title: 'My(tianzheng) first react app '
-    })
+      title: 'My first react app '
+    }),
+    new OpenBrowserPlugin({ url: 'http://localhost:3000' })
   ]
 }
