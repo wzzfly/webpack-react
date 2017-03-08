@@ -32,14 +32,16 @@ module.exports= {
         include: APP_PATH
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|gif|jpe?g|svg)$/,
         loader: 'url-loader?limit=8192'
       }
     ]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     //使用uglifyJs压缩js代码
     new webpack.optimize.UglifyJsPlugin({minimize: true}),
+       
     new HtmlwebpackPlugin({
       title: 'My(tianzheng) first react app '
     })
